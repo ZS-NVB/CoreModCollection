@@ -4,7 +4,7 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="E:\SteamLibrary\steamapps\common\GemCraft Frostborn Wrath\Mods\RangeAdjustmentFix-1.0-for-1.2.1a.swf" />
+    <movie path="E:\SteamLibrary\steamapps\common\GemCraft Frostborn Wrath\Mods\CoreModCollection-1.0-for-1.2.1a.swf" />
     <movie fps="30" />
     <movie width="1920" />
     <movie height="1080" />
@@ -73,7 +73,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="RangeAdjustmentFix.as" />
+    <compile path="Main.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
