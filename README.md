@@ -9,7 +9,7 @@ Some of these mods will modify your savefile so backup your saves before using t
 
 ## AchievementDisabler
 
-Prevents you from getting steam achievements (but doesn't prevent you from getting in-game achievements). No idea what it does if you're not using the steam version. 
+Prevents you from getting steam achievements (but doesn't prevent you from getting in-game achievements). No idea if it does anything if you're not using the steam version. 
 
 ## AllFragmentsHaveRunes
 
