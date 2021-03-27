@@ -45,6 +45,7 @@ package {
 			modArray.push(new Rarity100PlusFragments());
 			modArray.push(new BetterCritChance());
 			modArray.push(new ShrineFix());
+			modArray.push(new AchievementDisabler());
 			modArray.sortOn("MOD_NAME");
 			var folder:File = File.applicationStorageDirectory.resolvePath(MOD_NAME);
 			if (!folder.isDirectory) {
