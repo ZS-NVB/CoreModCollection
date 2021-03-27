@@ -63,6 +63,10 @@ Makes lanterns not make any sounds.
 
 Gets rid of the locks in the talisman.
 
+## ProportionateFragmentDrops
+
+Makes the chance of a dropped talisman fragment being an inner, edge or corner proportional to how many slots the talisman has for that type of fragment (that is, 36% chance for an inner, 48% chance for an edge and 16% chance for a corner). Also gets rid of the level requirements for getting edge and corner fragments from drops.
+
 ## RangeAdjustmentFix
 
 Fixes the problems with range adjustment and thus makes beam range not be reduced while a gem's range is above beam's max range.
