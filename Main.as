@@ -46,6 +46,7 @@ package {
 			modArray.push(new BetterCritChance());
 			modArray.push(new ShrineFix());
 			modArray.push(new AchievementDisabler());
+			modArray.push(new ProportionateFragmentDrops());
 			modArray.sortOn("MOD_NAME");
 			var folder:File = File.applicationStorageDirectory.resolvePath(MOD_NAME);
 			if (!folder.isDirectory) {
