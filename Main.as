@@ -47,6 +47,8 @@ package {
 			modArray.push(new ShrineFix());
 			modArray.push(new AchievementDisabler());
 			modArray.push(new ProportionateFragmentDrops());
+			modArray.push(new MapLimitsRemover());
+			modArray.push(new ModUnlocker());
 			modArray.sortOn("MOD_NAME");
 			var folder:File = File.applicationStorageDirectory.resolvePath(MOD_NAME);
 			if (!folder.isDirectory) {
