@@ -3,11 +3,11 @@ Some mods for GemCraft - Frostborn Wrath.
 
 [Bezel Mod Loader](https://github.com/gemforce-team/BezelModLoader) is required and needs to be at least version 0.3.1 for these mods to work.
 
-A config file will be created in %AppData%\com.giab.games.gcfw.steam\Local Store\CoreModCollection which will allow you to choose which mods are enabled.
-
 Some of these mods will modify your savefile so backup your saves before using the mods if you don't want to risk accidentally having a mod do that.
 
 To install this, download the swf from [here](https://github.com/ZS-NVB/CoreModCollection/releases) and put it in your mods folder.
+
+Once the game is run with this mod installed, a config file will be created in %AppData%\com.giab.games.gcfw.steam\Local Store\CoreModCollection which will allow you to choose which mods are enabled.
 
 ## AchievementDisabler
 
