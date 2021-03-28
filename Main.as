@@ -1,5 +1,4 @@
 package {
-	import flash.data.EncryptedLocalStore;
 	import flash.display.MovieClip;
 	import flash.filesystem.*;
 	import mods.*;
