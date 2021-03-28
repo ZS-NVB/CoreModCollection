@@ -5,7 +5,7 @@ package {
 	import mods.*;
 	
 	public class Main extends MovieClip {
-		public const VERSION:String = "1.1";
+		public const VERSION:String = "1.2";
 		public const GAME_VERSION:String = "1.2.1a";
 		public const BEZEL_VERSION:String = "0.3.1";
 		public const MOD_NAME:String = "CoreModCollection";
@@ -81,7 +81,7 @@ package {
 				stream.writeUTFBytes("{\n" + output.join(",\n") + "\n}");
 				stream.close();
 			}
-			COREMOD_VERSION = Math.random().toString();
+			//COREMOD_VERSION = Math.random().toString();
 		}
 		
 		public function modifyFile(filename:String, f:Function) : void {
