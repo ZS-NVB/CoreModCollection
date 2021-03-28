@@ -81,7 +81,7 @@ package {
 				stream.writeUTFBytes("{\n" + output.join(",\n") + "\n}");
 				stream.close();
 			}
-			//COREMOD_VERSION = Math.random().toString();
+			COREMOD_VERSION = Math.random().toString();
 		}
 		
 		public function modifyFile(filename:String, f:Function) : void {

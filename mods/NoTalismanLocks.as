@@ -3,7 +3,7 @@ package mods {
 
 	public class NoTalismanLocks {
 		public const MOD_NAME:String = "NoTalismanLocks";
-		public const COREMOD_VERSION:String = "1";
+		public const COREMOD_VERSION:String = "2";
 		
 		private var main:Main;
 		private var regex:RegExp;
@@ -11,35 +11,38 @@ package mods {
 
 		public function NoTalismanLocks() {}
 		
-		private function PlayerProgressData(fileContents:String) : void {
-			function setInitialValues(functionContents:String) : void {
-				result = new RegExp('\
-(getlocal0\n\
-getproperty QName\\(PackageNamespace\\(""\\), "talSlotUnlockStatuses"\\)\n)\
-(pushfalse\n)\
-callpropvoid QName\\(Namespace\\("http://adobe.com/AS3/2006/builtin"\\), "push"\\), 1\n\
-').exec(functionContents);
-				main.applyPatch(result.index + result[1].length, result[2].length, "pushtrue");
-			}
-			main.modifyFunction('QName(PackageNamespace(""), "setInitialValues")', setInitialValues);
-			function populateFromString01(functionContents:String) : void {
+		private function PnlTalisman(fileContents:String) : void {
+			function removeSlotUnlockedCheck(functionContents:String, variableName:String) : void {
 				result = new RegExp(main.format('\
-(getlocal0\n\
+getlex QName\\(PackageNamespace\\("com.giab.games.gcfw"\\), "GV"\\)\n\
+getproperty QName\\(PackageNamespace\\(""\\), "ppd"\\)\n\
 getproperty QName\\(PackageNamespace\\(""\\), "talSlotUnlockStatuses"\\)\n\
-getlocal ?{i}\n)\
-(getlocal ?{vTpsBa}\n\
-getlocal ?{i}\n\
-callproperty QName\\(PackageNamespace\\(""\\), "readBit"\\), 1\n)\
-setproperty MultinameL[^\n]+\n\
-')).exec(functionContents);
-				main.applyPatch(result.index + result[1].length, result[2].length, "pushtrue");
+getlocal ?{variableName}\n\
+getproperty MultinameL[^\n]+\n\
+'.replace("variableName", variableName))).exec(functionContents);
+				main.applyPatch(result.index, result[0].length, "pushtrue");
 			}
-			main.modifyFunction('QName(PrivateNamespace("com.giab.games.gcfw.struct:PlayerProgressData"), "populateFromString01")', populateFromString01);
+			function renderInfoPanel(functionContents:String) : void {
+				removeSlotUnlockedCheck(functionContents, "vSlotNum");
+			}
+			function canFragmentFitIntoTalismanSlot(functionContents:String) : void {
+				removeSlotUnlockedCheck(functionContents, "pTalSlotNum");
+			}
+			function selectTalSlot(functionContents:String) : void {
+				removeSlotUnlockedCheck(functionContents, "pSlotNum");
+			}
+			function setTalLockMcs(functionContents:String) : void {
+				removeSlotUnlockedCheck(functionContents, "i");
+			}
+			main.modifyFunction('QName(PackageNamespace(""), "renderInfoPanel")', renderInfoPanel);
+			main.modifyFunction('QName(PackageNamespace(""), "canFragmentFitIntoTalismanSlot")', canFragmentFitIntoTalismanSlot);
+			main.modifyFunction('QName(PackageNamespace(""), "selectTalSlot")', selectTalSlot);
+			main.modifyFunction('QName(PackageNamespace(""), "setTalLockMcs")', setTalLockMcs);
 		}
 		
 		public function loadCoreMod(main:Main) : void {
 			this.main = main;
-			main.modifyFile("com/giab/games/gcfw/struct/PlayerProgressData.class.asasm", PlayerProgressData);
+			main.modifyFile("com/giab/games/gcfw/selector/PnlTalisman.class.asasm", PnlTalisman);
 		}
 	}
 }
