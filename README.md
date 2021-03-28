@@ -59,9 +59,19 @@ Allows you to use battle traits when doing a field for the first time in journey
 
 Makes lanterns not make any sounds.
 
+## MapLimitsRemover
+
+Removes the limits on how far you can scroll the map so you can activate mods and unlock mods at any point in the game.
+
+## ModUnlocker
+
+Unlocks all the in-game mods. Works by making the mods not need to be unlocked to toggle them so the effects of this mod can be reverted by disabling it (but any mods activated which haven't been unlocked won't be able to be disabled until the mod is unlocked).
+
 ## NoTalismanLocks
 
 Gets rid of the locks in the talisman.
+
+New in version 1.2: Works by making the locks inactive and doesn't actually set the slots to be unlocked so the effects of this mod can be reverted by disabling it (but any fragments in slots which aren't unlocked will stay there).
 
 ## ProportionateFragmentDrops
 
@@ -77,7 +87,7 @@ Allows for rarity 100 fragments with more properties and maximum upgrade level t
 
 ## RotatableFragments
 
-Allows talisman fragments to be rotated by pressing R while the cursor is over them in the talisman fragment inventory. When adding a talisman fragment to the shape collection, all rotations of it will also be added.
+Allows talisman fragments to be rotated by pressing R while the cursor is over them in the talisman fragment inventory. When adding a talisman fragment to the shape collection, all rotations of it will also be added. When loading a save, all rotations of shapes in the shape collection will also be added to the shape collection, so this mod has irreversible effects on savefiles.
 
 ## ShrineFix
 
