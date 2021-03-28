@@ -7,6 +7,8 @@ A config file will be created in %AppData%\com.giab.games.gcfw.steam\Local Store
 
 Some of these mods will modify your savefile so backup your saves before using the mods if you don't want to risk accidentally having a mod do that.
 
+To install this, download the swf from [here](https://github.com/ZS-NVB/CoreModCollection/releases) and put it in your mods folder.
+
 ## AchievementDisabler
 
 Prevents you from getting steam achievements (but doesn't prevent you from getting in-game achievements). No idea if it does anything if you're not using the steam version. 
