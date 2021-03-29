@@ -25,6 +25,10 @@ Makes the True Colors and Bleeding skills increase bleeding damage multiplier in
 
 Uncaps crit chance, makes lanterns not have a crit chance cap either, makes traps and amplifiers increase crit chance (it won't show in stats gained through amplification though) and changes how crit chance scales.
 
+## BetterManaStream
+
+Makes mana stream's secondary bonus also reduce how much the mana pool requirement gets multiplied by each time the pool expands.
+
 ## BetterResonance
 
 Makes resonance give 4% damage per level (up from 3%) and replaces its useless range bonus with 4% additional damage for grade 7+ gems per 5 levels.
@@ -94,6 +98,14 @@ Allows talisman fragments to be rotated by pressing R while the cursor is over t
 ## ShrineFix
 
 Makes the percentage health damage of shrines not be affected by modifiers and just directly multiply health. Also reverts the health shred back to what it originally was.
+
+## TrapRangeDisplay
+
+Makes hovering over a gem in a trap show the range of the trap.
+
+## TrapRangeIncrease
+
+Increases the range of traps to be the same number of tiles as the range of traps in Chasing Shadows.
 
 ## TrapTargetFix
 

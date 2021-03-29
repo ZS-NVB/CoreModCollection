@@ -4,7 +4,7 @@ package {
 	import mods.*;
 	
 	public class Main extends MovieClip {
-		public const VERSION:String = "1.2";
+		public const VERSION:String = "1.3";
 		public const GAME_VERSION:String = "1.2.1a";
 		public const BEZEL_VERSION:String = "0.3.1";
 		public const MOD_NAME:String = "CoreModCollection";
@@ -48,6 +48,9 @@ package {
 			modArray.push(new ProportionateFragmentDrops());
 			modArray.push(new MapLimitsRemover());
 			modArray.push(new ModUnlocker());
+			modArray.push(new TrapRangeIncrease());
+			modArray.push(new BetterManaStream());
+			modArray.push(new TrapRangeDisplay());
 			modArray.sortOn("MOD_NAME");
 			var folder:File = File.applicationStorageDirectory.resolvePath(MOD_NAME);
 			if (!folder.isDirectory) {
