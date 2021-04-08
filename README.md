@@ -17,13 +17,17 @@ Prevents you from getting steam achievements (but doesn't prevent you from getti
 
 Makes every talisman fragment have a rune.
 
+## BarageTargetLimitRemover
+
+Makes barrage shells be able to hit more than 3 monsters.
+
 ## BetterBleeding
 
 Makes the True Colors and Bleeding skills increase bleeding damage multiplier instead of duration and adds a third bonus to the Bleeding skill which increases bleeding duration by 20% per 5 levels.
 
 ## BetterCritChance
 
-Uncaps crit chance, makes lanterns not have a crit chance cap either, makes traps and amplifiers increase crit chance (it won't show in stats gained through amplification though) and changes how crit chance scales.
+Uncaps crit chance, makes lanterns not have a crit chance cap either, fixes a bug which prevented gem bombs from being able to crit, makes traps and amplifiers increase crit chance (it won't show in stats gained through amplification though) and changes how crit chance scales.
 
 ## BetterManaStream
 
@@ -45,13 +49,25 @@ Makes true colors give 4% gem specials per level and 4% gem damage per 5 levels,
 
 Displays bleed effect as a multiplier instead of a percentage.
 
+## DamageEstimationFix
+
+Makes damage estimation better to fix things such as towers overshooting bleeding monsters, bolt ignoring thick air in some cases, monsters dying before running out of health due to accumulating incoming damage due to it not being reduced properly when getting hit and pylons applying talisman and adaptive carapace modifiers twice. Also makes monster talisman damage modifiers apply after armor like all other talisman damage modifiers and makes the spire damage limit apply after bleeding.
+
 ## EnrageAnyWave
 
 Removes the mechanic which makes the next wave be unenraged when adding a gem to the enraging socket after the first wave.
 
+## FreezeCritDamageFix
+
+Makes frozen monsters take more damage from crits in all cases and makes it multiply the damage rather than just add onto the critical damage multiplier.
+
 ## IceShardsDamageReversion
 
 Puts Ice Shards' base health shred back to 20% like it originally was.
+
+## IndividualBeamHits
+
+Makes each hit of beam choose a target to hit rather than having all beam hits from a given tower in one frame hit the same monster, improving the performance of beam when dealing with lots of low health monsters and making beam work just as well on 3x speed as on 1x speed in such a situation.
 
 ## JourneyGems
 
@@ -64,6 +80,10 @@ Allows you to use battle traits when doing a field for the first time in journey
 ## LanternMuter
 
 Makes lanterns not make any sounds.
+
+## ManaLeechFixes
+
+Fixes mana leech so that mana leech stats get increased by the correct amount, gems don't need to be grade 1 with at least 900 mana leeched in order to count for mana leeched against poisoned/bleeding/whiteouted monsters in some cases, makes all sources of mana leech be able to leech from any creature they hit and prevents tower shots and bolts from leeching from dead creatures.
 
 ## MapLimitsRemover
 

@@ -4,7 +4,7 @@ package {
 	import mods.*;
 	
 	public class Main extends MovieClip {
-		public const VERSION:String = "1.3";
+		public const VERSION:String = "1.4";
 		public const GAME_VERSION:String = "1.2.1a";
 		public const BEZEL_VERSION:String = "0.3.1";
 		public const MOD_NAME:String = "CoreModCollection";
@@ -51,6 +51,11 @@ package {
 			modArray.push(new TrapRangeIncrease());
 			modArray.push(new BetterManaStream());
 			modArray.push(new TrapRangeDisplay());
+			modArray.push(new DamageEstimationFix());
+			modArray.push(new FreezeCritDamageFix());
+			modArray.push(new BarrageTargetLimitRemover());
+			modArray.push(new ManaLeechFixes());
+			modArray.push(new IndividualBeamHits());
 			modArray.sortOn("MOD_NAME");
 			var folder:File = File.applicationStorageDirectory.resolvePath(MOD_NAME);
 			if (!folder.isDirectory) {
@@ -86,18 +91,18 @@ package {
 			//COREMOD_VERSION = Math.random().toString();
 		}
 		
-		public function modifyFile(filename:String, f:Function) : void {
+		public function modifyFile(filename:String, f:Function, ...args:*) : void {
 			if (!(filename in files)) {
 				files[filename] = new Array();
 			}
-			files[filename].push({f: f, mod: currentMod});
+			files[filename].push({f: f, mod: currentMod, args: args});
 		}
 		
-		public function modifyFunction(identifier:String, f:Function) : void {
+		public function modifyFunction(identifier:String, f:Function, ...args:*) : void {
 			if (!(identifier in functions)) {
 				functions[identifier] = new Array();
 			}
-			functions[identifier].push({f: f, mod: currentMod});
+			functions[identifier].push({f: f, mod: currentMod, args: args});
 		}
 		
 		public function format(input:String, jumpTargets:Object = null) : String {
@@ -130,6 +135,10 @@ package {
 		
 		public function applyPatch(offset:int, replace:int, add:String = "") : void {
 			offset += functionOffset;
+			if (replace < 0) {
+				replace = -replace;
+				offset -= replace;
+			}
 			var lineOffset:int = fileContents.substr(0, offset).split('\n').length - 1;
 			var replaceLines:int = fileContents.substr(offset, replace).split('\n').length - 1;
 			if (!(currentMod in patches)) {
@@ -161,7 +170,8 @@ package {
 				for (var j:* in files[filename]) {
 					currentMod = files[filename][j].mod;
 					try {
-						files[filename][j].f(fileContents);
+						files[filename][j].args.insertAt(0, fileContents);
+						files[filename][j].f.apply(null, files[filename][j].args);
 					} catch (error:Error) {
 						failedMods[currentMod] = error.message;
 					}
@@ -190,6 +200,8 @@ package {
 						result = regex.exec(functionContents);
 						if (result != null) {
 							functionNamespaces = result[1];
+						} else {
+							functionNamespaces = '[PackageNamespace("")]'
 						}
 					}
 					for (var k:* in functions[identifier]) {
@@ -198,7 +210,8 @@ package {
 							if (functionNotFound) {
 								throw new Error("function identifier " + identifier + " not found in " + filename);
 							}
-							functions[identifier][k].f(functionContents);
+							functions[identifier][k].args.insertAt(0, functionContents);
+							functions[identifier][k].f.apply(null, functions[identifier][k].args);
 						} catch (error:Error) {
 							failedMods[currentMod] = error.message;
 						}

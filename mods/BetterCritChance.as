@@ -3,7 +3,7 @@ package mods {
 
 	public class BetterCritChance {
 		public const MOD_NAME:String = "BetterCritChance";
-		public const COREMOD_VERSION:String = "1";
+		public const COREMOD_VERSION:String = "2";
 		
 		private var main:Main;
 		private var regex:RegExp;
@@ -83,10 +83,51 @@ add\
 			main.modifyFunction('QName(PackageNamespace(""), "amplifyGem")', amplifyGem);
 		}
 		
+		private function ShotData(fileContents:String) : void {
+			function clone(functionContents:String) : void {
+				result = new RegExp(main.format('\
+getlocal ?{vRetVal}\n\
+getproperty QName\\(PackageNamespace\\(""\\), "critHitChance"\\)\n\
+getlocal0\n\
+getproperty QName\\(PackageNamespace\\(""\\), "critHitChance"\\)\n\
+callproperty QName\\(PackageNamespace\\(""\\), "g"\\), 0\n\
+callpropvoid QName\\(PackageNamespace\\(""\\), "s"\\), 1\n\
+')).exec(functionContents);
+				main.applyPatch(result.index + result[0].length, 0, main.format('\
+getlocal {vRetVal}\n\
+getproperty QName(PackageNamespace(""), "calcCritChance")\n\
+getlocal0\n\
+getproperty QName(PackageNamespace(""), "calcCritChance")\n\
+callproperty QName(PackageNamespace(""), "g"), 0\n\
+callpropvoid QName(PackageNamespace(""), "s"), 1\
+'));
+			}
+			main.modifyFunction('QName(PackageNamespace(""), "clone")', clone);
+		}
+		
+		private function GemWasp(fileContents:String) : void {
+			function iinit(functionContents:String) : void {
+				result = new RegExp(main.format('\
+getlocal0\n\
+getproperty QName\\(PackageNamespace\\(""\\), "shotData"\\)\n\
+getproperty QName\\(PackageNamespace\\(""\\), "calcCritChance"\\)\n\
+getlocal ?{pGem}\n\
+getproperty QName\\(PackageNamespace\\(""\\), "sd2_CompNumMod"\\)\n\
+getproperty QName\\(PackageNamespace\\(""\\), "critHitChance"\\)\n\
+callproperty QName\\(PackageNamespace\\(""\\), "g"\\), 0\n\
+callpropvoid QName\\(PackageNamespace\\(""\\), "s"\\), 1\n\
+')).exec(functionContents);
+				main.applyPatch(result.index, result[0].length);
+			}
+			main.modifyFunction('iinit', iinit);
+		}
+		
 		public function loadCoreMod(main:Main) : void {
 			this.main = main;
 			main.modifyFile("com/giab/games/gcfw/entity/Gem.class.asasm", Gem);
 			main.modifyFile("com/giab/games/gcfw/ingame/IngameCalculator.class.asasm", IngameCalculator);
+			main.modifyFile("com/giab/games/gcfw/struct/ShotData.class.asasm", ShotData);
+			main.modifyFile("com/giab/games/gcfw/entity/GemWasp.class.asasm", GemWasp);
 		}
 	}
 }
