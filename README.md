@@ -17,7 +17,7 @@ Prevents you from getting steam achievements (but doesn't prevent you from getti
 
 Makes every talisman fragment have a rune.
 
-## BarageTargetLimitRemover
+## BarrageTargetLimitRemover
 
 Makes barrage shells be able to hit more than 3 monsters.
 
