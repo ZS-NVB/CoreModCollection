@@ -3,7 +3,7 @@ package mods {
 
 	public class DamageEstimationFix {
 		public const MOD_NAME:String = "DamageEstimationFix";
-		public const COREMOD_VERSION:String = "1";
+		public const COREMOD_VERSION:String = "2";
 		
 		private var main:Main;
 		private var regex:RegExp;
@@ -408,13 +408,21 @@ setlocal ?{pDamage}\n\
 ')).exec(functionContents);
 				main.applyPatch(result.index, result[0].length);
 				var talismanDamage:String = result[0];
+				result = new RegExp(main.format('\
+getlocal ?{pDamage}\n\
+getlex QName\\(PackageNamespace\\("com.giab.games.gcfw"\\), "GV"\\)\n\
+getproperty QName\\(PackageNamespace\\(""\\), "wraithDmgMult"\\)\n\
+')).exec(functionContents);
+				main.applyPatch(result.index, 0, talismanDamage);
 				result = new RegExp('\
 getlocal0\n\
 getproperty QName\\(PackageNamespace\\(""\\), "dmgDiv"\\)\n\
 pushbyte 0\n\
-ifngt \\w+\n\
-').exec(functionContents);
-				main.applyPatch(result.index, 0, talismanDamage + main.format('\
+ifngt (\\w+)\n\
+.+?\
+\\1:\n\
+', "s").exec(functionContents);
+				main.applyPatch(result.index + result[0].length , 0, main.format('\
 getlex QName(PackageNamespace(""), "Math")\n\
 pushbyte 1\n\
 getlocal {pDamage}\n\

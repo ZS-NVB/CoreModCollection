@@ -3,7 +3,7 @@ package mods {
 
 	public class FreezeCritDamageFix {
 		public const MOD_NAME:String = "FreezeCritDamageFix";
-		public const COREMOD_VERSION:String = "1";
+		public const COREMOD_VERSION:String = "2";
 		
 		private var main:Main;
 		private var regex:RegExp;
@@ -333,15 +333,6 @@ setlocal {vCritMult}\
 			function castGemBomb(functionContents:String) : void {
 				result = new RegExp(main.format('\
 (getlocal ?{vBombShotData}\n\
-getproperty QName\\(PackageNamespace\\(""\\), "damageMax"\\)\n\
-callproperty QName\\(PackageNamespace\\(""\\), "g"\\), 0\n\
-getlocal ?{vTargetsToHit}\n\
-getproperty QName\\(PackageNamespace\\(""\\), "length"\\)\n\
-divide\n\
-convert_d\n\
-setlocal ?{vDamagePerMonster}\n\
-debugline \\d+\n\
-getlocal ?{vBombShotData}\n\
 getproperty QName\\(PackageNamespace\\(""\\), "calcCritChance"\\)\n\
 callproperty QName\\(PackageNamespace\\(""\\), "g"\\), 0\n\
 getlex QName\\(PackageNamespace\\(""\\), "Math"\\)\n\

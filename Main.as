@@ -4,7 +4,7 @@ package {
 	import mods.*;
 	
 	public class Main extends MovieClip {
-		public const VERSION:String = "1.4";
+		public const VERSION:String = "1.5";
 		public const GAME_VERSION:String = "1.2.1a";
 		public const BEZEL_VERSION:String = "0.3.1";
 		public const MOD_NAME:String = "CoreModCollection";
@@ -17,6 +17,7 @@ package {
 		private var functions:Object;
 		private var filename:String;
 		private var fileContents:String;
+		private var functionIdentifier:String;
 		private var functionContents:String;
 		private var functionOffset:int;
 		private var functionLocals:Object;
@@ -56,6 +57,19 @@ package {
 			modArray.push(new BarrageTargetLimitRemover());
 			modArray.push(new ManaLeechFixes());
 			modArray.push(new IndividualBeamHits());
+			modArray.push(new ConstantSkillPointCost());
+			modArray.push(new MultiplicativeBoundModifiers());
+			modArray.push(new NoRitualWizardHunters());
+			modArray.push(new BetterGemBombs());
+			modArray.push(new UncappedSkills());
+			modArray.push(new LinearSkillEffects());
+			modArray.push(new IceShardsChange());
+			modArray.push(new StatFixes());
+			modArray.push(new FreezeDiminishingReturns());
+			modArray.push(new FreezeCooldownReversion());
+			modArray.push(new BetterFusion());
+			modArray.push(new BetterOrb());
+			modArray.push(new BetterFury());
 			modArray.sortOn("MOD_NAME");
 			var folder:File = File.applicationStorageDirectory.resolvePath(MOD_NAME);
 			if (!folder.isDirectory) {
@@ -99,6 +113,7 @@ package {
 		}
 		
 		public function modifyFunction(identifier:String, f:Function, ...args:*) : void {
+			identifier = identifier.replace(',"', ', "');
 			if (!(identifier in functions)) {
 				functions[identifier] = new Array();
 			}
@@ -133,7 +148,54 @@ package {
 			applyPatch(result.index + result[0].length, 0, "maxstack " + stackSize.toString());
 		}
 		
-		public function applyPatch(offset:int, replace:int, add:String = "") : void {
+		public function formatLocals(matchedSubstring:String, instruction:String, local:String, index:int, str:String) : String {
+			if (!local.match(/^\w+$/)) {
+				return matchedSubstring;
+			}
+			if (functionLocals != null) {
+				if (local in functionLocals) {
+					local = functionLocals[local];
+				} else if (int(local) == 0 && local != "0") {
+					throw new Error("local " + local + " not found in function " + functionIdentifier + " in file " + filename);
+				}
+			}
+			var result:String = instruction;
+			if ((instruction != "getlocal" && instruction != "setlocal") || int(local) > 3) {
+				result += " ";
+			}
+			return result + local;
+		}
+		
+		public function regex(pattern:String, options:String = null ) : RegExp {
+			pattern = pattern.replace(/([gs]etlocal|(?:in|de)clocal(?:_i)?|kill) (.+)$/gm, formatLocals);
+			pattern = pattern.replace(/QName\((\w+)\("([^"]*)"\), ?"([^"]+)"\)/g, 'QName\\($1\\("$2"\\), "$3"\\)');
+			pattern = pattern.replace(/MultinameL\(\)/g, 'MultinameL\\(\\[[^\\]]+\\]\\)');
+			pattern = pattern.replace(/Multiname\("(\w+)"\)/g, 'Multiname\\("$1", \\[[^\\]]+\\]\\)');
+			return new RegExp(pattern, options);
+		}
+		
+		public function applyPatch(offset:int, replace:int, add:String = "", jumpTargets:Object = null) : void {
+			function formatJump(matchedSubstring:String, instruction:String, jumpTarget:String, index:int, str:String) : String {
+				if (jumpTargets != null && jumpTarget in jumpTargets) {
+					return instruction + " " + jumpTargets[jumpTarget];
+				} else if (!jumpTarget.match(/^L\d+$/) && !jumpTarget.match(/^0\.\d+$/)) {
+					throw new Error("Jump target " + jumpTarget + " not found");
+				}
+				return matchedSubstring;
+			}
+			function formatJumpTarget(matchedSubstring:String, jumpTarget:String, index:int, str:String) : String {
+				if (jumpTargets != null && jumpTarget in jumpTargets) {
+					return jumpTargets[jumpTarget] + ":";
+				} else if (!jumpTarget.match(/^L\d+$/) && !jumpTarget.match(/^0\.\d+$/)) {
+					throw new Error("Jump target " + jumpTarget + " not found");
+				}
+				return matchedSubstring;
+			}
+			add = add.replace(/^(if\w+|jump) (\w+)$/gm, formatJump);
+			add = add.replace(/^(\w+):$/gm, formatJumpTarget);
+			add = add.replace(/^([gs]etlocal|(?:in|de)clocal(?:_i)?|kill) (\w+)$/gm, formatLocals);
+			add = add.replace(/MultinameL\(\)/g, 'MultinameL(' + functionNamespaces + ')');
+			add = add.replace(/Multiname\("(\w+)"\)/g, 'Multiname("$1", ' + functionNamespaces + ')');
 			offset += functionOffset;
 			if (replace < 0) {
 				replace = -replace;
@@ -166,6 +228,8 @@ package {
 				this.filename = filename;
 				fileContents = lattice.retrieveFile(filename);
 				functionOffset = 0;
+				functionLocals = null;
+				functionNamespaces = '[PackageNamespace("")]'
 				functions = new Object();
 				for (var j:* in files[filename]) {
 					currentMod = files[filename][j].mod;
@@ -186,6 +250,7 @@ package {
 					var result:Object = regex.exec(fileContents);
 					var functionNotFound:Boolean = (result == null);
 					if (!functionNotFound) {
+						functionIdentifier = identifier;
 						functionOffset = result.index;
 						functionContents = result[0];
 						functionLocals = new Object();
@@ -232,7 +297,7 @@ package {
 						lattice.patchFile(patch[0], patch[1], patch[2], patch[3]);
 					}
 				} else {
-					stream.writeUTFBytes(modName + " failed:" + failedMods[modName]);
+					stream.writeUTFBytes(modName + " failed:" + failedMods[modName] + "\n");
 				}
 			}
 			stream.close();

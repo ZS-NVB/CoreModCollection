@@ -3,7 +3,7 @@ package mods {
 
 	public class BetterManaStream {
 		public const MOD_NAME:String = "BetterManaStream";
-		public const COREMOD_VERSION:String = "1";
+		public const COREMOD_VERSION:String = "2";
 		
 		private var main:Main;
 		private var regex:RegExp;
@@ -58,7 +58,7 @@ add\
 pushstring "-#0% lower mana pool milestones"\n\
 ').exec(functionContents);
 				main.applyPatch(result.index, result[0].length, '\
-pushstring "-#0% lower mana pool milestone increments"\
+pushstring "-#0,1% lower mana pool milestone increments"\
 ');
 			}
 			main.modifyFunction('QName(PackageNamespace(""), "populateSkillsMetaData")', populateSkillsMetaData);
