@@ -3,13 +3,34 @@ package mods {
 	
 	public class StatFixes {
 		public const MOD_NAME:String = "StatFixes";
-		public const COREMOD_VERSION:String = "1";
+		public const COREMOD_VERSION:String = "2";
 		
 		private var main:Main;
 		private var regex:RegExp;
 		private var result:Object;
 		
 		public function StatFixes() {}
+		
+		private function Monster(fileContents:String) : void {
+			function sufferShotDamage(functionContents:String) : void {
+				result = main.regex('\
+getlex QName(PackageNamespace("com.giab.games.gcfw"),"GV")\n\
+getproperty QName(PackageNamespace(""),"ingameStats")\n\
+dup\n\
+setlocal ?\\d+\n\
+getproperty QName(PackageNamespace(""),"killsByTowerBeam")\n\
+increment\n\
+setlocal ?\\d+\n\
+getlocal ?\\d+\n\
+getlocal ?\\d+\n\
+setproperty QName(PackageNamespace(""),"killsByTowerBeam")\n\
+kill ?\\d+\n\
+kill ?\\d+\n\
+').exec(functionContents);
+				main.applyPatch(result.index, result[0].length);
+			}
+			main.modifyFunction('QName(PackageNamespace(""),"sufferShotDamage")', sufferShotDamage);
+		}
 		
 		private function StrikeSpell(fileContents:String) : void {
 			function iinit(functionContents:String) : void {
@@ -101,6 +122,7 @@ pushstring "Enraged waves: "\
 		
 		public function loadCoreMod(main:Main) : void {
 			this.main = main;
+			main.modifyFile("com/giab/games/gcfw/entity/Monster.class.asasm", Monster);
 			main.modifyFile("com/giab/games/gcfw/entity/StrikeSpell.class.asasm", StrikeSpell);
 			main.modifyFile("com/giab/games/gcfw/selector/PnlStats.class.asasm", PnlStats);
 			main.modifyFile("com/giab/games/gcfw/ingame/IngameEnding.class.asasm", IngameEnding);

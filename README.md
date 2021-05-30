@@ -91,7 +91,7 @@ Makes freeze last less time the more times it is cast on a target to prevent cre
 
 ## IceShardsChange
 
-Makes ice shards reduce health by a percentage of the max health rather than the current health but with diminishing returns the more times it is cast on a creature so that the effect of ice shards is no longer exponential in the number of times it is cast and casting ice shards on a monster on low health is just as good as casting it on a monster with full health.
+Makes ice shards reduce max health by a percentage instead of current health and reduce current health by the same amount max health was reduced by so casting ice shards on a monster on low health is just as good as casting it on a monster with full health. Also adds diminishing returns to ice shards so that the effect is no longer exponential in the number of times it is cast on a monster.
 
 ## IceShardsDamageReversion
 
@@ -161,11 +161,11 @@ Allows talisman fragments to be rotated by pressing R while the cursor is over t
 
 ## ShrineFix
 
-Makes the percentage health damage of shrines not be affected by modifiers and just directly multiply health. Also reverts the health shred back to what it originally was.
+Makes the percentage health damage of shrines not be affected by modifiers and just directly multiply max health and reduce health by the amount max health was reduced by. Also reverts the health shred back to what it originally was.
 
 ## StatFixes
 
-Fixes a few issues with stats such as ice shards kills not counting as kills from ice shards, exploding orblets kills being in the wrong place in the stats menu and "engared waves". Doesn't attempt to fix anything else though.
+Fixes a few issues with stats such as ice shards kills not counting as kills from ice shards, beam kills against monsters counting twice, exploding orblets kills being in the wrong place in the stats menu and "engared waves". Doesn't attempt to fix anything else though.
 
 ## TrapRangeDisplay
 
@@ -182,3 +182,7 @@ Makes traps apply their target priority on every shot, makes the random priority
 ## UncappedSkills
 
 Makes all skills be uncapped (or at least have a cap of 9999999). Does have a few problems which need fixing with other mods and even then it's not very balanced since it results in too many sources of mana/xp.
+
+## WhiteoutOrbKillsReversion
+
+Reverts the change which made whiteout need monsters to be below 1000 health to be killed by the orb.

@@ -4,7 +4,7 @@ package {
 	import mods.*;
 	
 	public class Main extends MovieClip {
-		public const VERSION:String = "1.5";
+		public const VERSION:String = "1.5.1";
 		public const GAME_VERSION:String = "1.2.1a";
 		public const BEZEL_VERSION:String = "0.3.1";
 		public const MOD_NAME:String = "CoreModCollection";
@@ -70,6 +70,7 @@ package {
 			modArray.push(new BetterFusion());
 			modArray.push(new BetterOrb());
 			modArray.push(new BetterFury());
+			modArray.push(new WhiteoutOrbKillsReversion());
 			modArray.sortOn("MOD_NAME");
 			var folder:File = File.applicationStorageDirectory.resolvePath(MOD_NAME);
 			if (!folder.isDirectory) {

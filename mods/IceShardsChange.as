@@ -3,7 +3,7 @@ package mods {
 	
 	public class IceShardsChange {
 		public const MOD_NAME:String = "IceShardsChange";
-		public const COREMOD_VERSION:String = "1";
+		public const COREMOD_VERSION:String = "2";
 		
 		private var main:Main;
 		private var regex:RegExp;
@@ -75,8 +75,12 @@ getlocal i\n\
 getproperty MultinameL()\n\
 getproperty Multiname("hpMax")\n\
 callproperty Multiname("g"), 0\n\
-pushbyte 1\n\
-dup\n\
+pushbyte 100\n\
+getlex QName(PackageNamespace("com.giab.games.gcfw"),"GV")\n\
+getproperty QName(PackageNamespace(""),"ingameCore")\n\
+getproperty QName(PackageNamespace(""),"spIsHpShredPct")\n\
+callproperty QName(PackageNamespace(""),"g"), 0\n\
+divide\n\
 pushstring "timesIceSharded"\n\
 getlocal vMonstersHit\n\
 getlocal i\n\
@@ -93,48 +97,52 @@ jump jumpTarget2\n\
 jumpTarget1:\n\
 pushbyte 0\n\
 jumpTarget2:\n\
+add\n\
+divide\n\
+subtract\n\
+', main.getJumpTargets("jumpTarget1", "jumpTarget2"));
+				main.applyPatch(result.index + result[0].length, 0, '\
+getlocal vMonstersHit\n\
+getlocal i\n\
+getproperty MultinameL()\n\
+getproperty Multiname("hpMax")\n\
+getlocal vMonstersHit\n\
+getlocal i\n\
+getproperty MultinameL()\n\
+getproperty Multiname("hpMax")\n\
+callproperty Multiname("g"), 0\n\
+getlocal vMonstersHit\n\
+getlocal i\n\
+getproperty MultinameL()\n\
+getproperty Multiname("hpMax")\n\
+callproperty Multiname("g"), 0\n\
 pushbyte 100\n\
 getlex QName(PackageNamespace("com.giab.games.gcfw"),"GV")\n\
 getproperty QName(PackageNamespace(""),"ingameCore")\n\
 getproperty QName(PackageNamespace(""),"spIsHpShredPct")\n\
 callproperty QName(PackageNamespace(""),"g"), 0\n\
 divide\n\
-pushbyte 1\n\
-subtract\n\
-divide\n\
-add\n\
-divide\n\
-pushbyte 1\n\
-dup\n\
 pushstring "timesIceSharded"\n\
 getlocal vMonstersHit\n\
 getlocal i\n\
 getproperty MultinameL()\n\
 in\n\
-iffalse jumpTarget3\n\
+iffalse jumpTarget1\n\
 getlocal vMonstersHit\n\
 getlocal i\n\
 getproperty MultinameL()\n\
 getproperty Multiname("timesIceSharded")\n\
-jump jumpTarget4\n\
-jumpTarget3:\n\
-pushbyte 1\n\
-jumpTarget4:\n\
-pushbyte 100\n\
-getlex QName(PackageNamespace("com.giab.games.gcfw"),"GV")\n\
-getproperty QName(PackageNamespace(""),"ingameCore")\n\
-getproperty QName(PackageNamespace(""),"spIsHpShredPct")\n\
-callproperty QName(PackageNamespace(""),"g"), 0\n\
-divide\n\
 pushbyte 1\n\
 subtract\n\
-divide\n\
+jump jumpTarget2\n\
+jumpTarget1:\n\
+pushbyte 0\n\
+jumpTarget2:\n\
 add\n\
 divide\n\
 subtract\n\
-multiply\n\
-subtract\n\
-', main.getJumpTargets("jumpTarget1", "jumpTarget2", "jumpTarget3", "jumpTarget4"));
+callpropvoid Multiname("s"), 1\
+', main.getJumpTargets("jumpTarget1", "jumpTarget2"));
 			}
 			main.modifyFunction('iinit', iinit);
 		}
