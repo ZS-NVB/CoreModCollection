@@ -3,7 +3,7 @@ package mods {
 
 	public class TrapTargetFix {
 		public const MOD_NAME:String = "TrapTargetFix";
-		public const COREMOD_VERSION:String = "1";
+		public const COREMOD_VERSION:String = "2";
 		
 		private var main:Main;
 		private var regex:RegExp;
@@ -13,6 +13,13 @@ package mods {
 		
 		private function Trap(fileContents:String) : void {
 			function doEnterFrame(functionContents:String) : void {
+				result = main.regex('\
+getlocal vPossibleTargets\n\
+getproperty QName(PackageNamespace(""),"length")\n\
+pushbyte 0\n\
+ifne \\w+\n\
+').exec(functionContents);
+				main.applyPatch(result.index, result[0].length);
 				result = new RegExp('\
 jump (\\w+)\n\
 \\w+:\n\

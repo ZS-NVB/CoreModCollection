@@ -177,7 +177,7 @@ Increases the range of traps to be the same number of tiles as the range of trap
 
 ## TrapTargetFix
 
-Makes traps apply their target priority on every shot, makes the random priority random again, makes traps on highest banishment cost/special/carrying orblet sort the list of targets in the correct order, makes traps no longer have a limit on the number of times a single monster can be hit in one frame and makes traps not fire at dead monsters.
+Makes traps apply their target priority on every shot, makes the random priority random again, makes traps on highest banishment cost/special/carrying orblet sort the list of targets in the correct order, makes traps no longer have a limit on the number of times a single monster can be hit in one frame and makes traps not fire at dead monsters. Also makes traps always add special entities to the list of targets rather only when there's no monsters in range.
 
 ## UncappedSkills
 
