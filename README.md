@@ -91,7 +91,7 @@ Makes freeze last less time the more times it is cast on a target to prevent cre
 
 ## IceShardsChange
 
-Makes ice shards reduce max health by a percentage instead of current health and reduce current health by the same amount max health was reduced by so casting ice shards on a monster on low health is just as good as casting it on a monster with full health. Also adds diminishing returns to ice shards so that the effect is no longer exponential in the number of times it is cast on a monster.
+Makes ice shards reduce max health by a percentage and reduce current health by the same amount max health was reduced by so casting ice shards on a monster on low health is just as good as casting it on a monster with full health. Also adds diminishing returns to ice shards so that the effect is no longer exponential in the number of times it is cast on a monster.
 
 ## IceShardsDamageReversion
 
