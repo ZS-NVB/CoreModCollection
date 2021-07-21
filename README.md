@@ -115,7 +115,7 @@ Makes lanterns not make any sounds.
 
 ## LevelCapRemover
 
-Removes the level cap of 1 billion and makes the game not crash at levels above e15 or so.
+Removes the level cap of 1 billion and makes the game not crash at levels above e15 or so. Doesn't fix the visual issues with xp requirements at such high levels though.
 
 ## LinearSkillEffects
 
