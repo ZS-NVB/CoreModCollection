@@ -71,6 +71,7 @@ package {
 			modArray.push(new BetterOrb());
 			modArray.push(new BetterFury());
 			modArray.push(new WhiteoutOrbKillsReversion());
+			modArray.push(new LevelCapRemover());
 			modArray.sortOn("MOD_NAME");
 			var folder:File = File.applicationStorageDirectory.resolvePath(MOD_NAME);
 			if (!folder.isDirectory) {

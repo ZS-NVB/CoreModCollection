@@ -43,11 +43,11 @@ Makes the damage be divided by the number of targets hit after it has been reduc
 
 ## BetterManaStream
 
-Makes mana stream's secondary bonus also reduce how much the mana pool requirement gets multiplied by each time the pool expands.
+Makes mana stream's secondary bonus also reduce how much the mana pool requirement gets multiplied by each time the pool expands. Also makes mana pool requirements no longer need to be integers because that causes problems.
 
 ## BetterOrb
 
-Makes banishment cost decrease by 0.8% per level instead of 0.5% and makes it multiplicative with the orb's banishment cost reduction from gems to stop banishment from becoming free. 
+Makes banishment cost decrease by 1% per level instead of 0.5% and makes it multiplicative with the orb's banishment cost reduction from gems to stop banishment from becoming free. 
 
 ## BetterResonance
 
@@ -113,6 +113,10 @@ Allows you to use battle traits when doing a field for the first time in journey
 
 Makes lanterns not make any sounds.
 
+## LevelCapRemover
+
+Removes the level cap of 1 billion and makes the game not crash at levels above e15 or so.
+
 ## LinearSkillEffects
 
 Makes skill effects which are reductions scale such that their effects are linear rather than their reductions, using the value at a skill level of 75 to determine how much to increase it by per level.
@@ -177,7 +181,7 @@ Increases the range of traps to be the same number of tiles as the range of trap
 
 ## TrapTargetFix
 
-Makes traps apply their target priority on every shot, makes the random priority random again, makes traps on highest banishment cost/special/carrying orblet sort the list of targets in the correct order, makes traps no longer have a limit on the number of times a single monster can be hit in one frame and makes traps not fire at dead monsters. Also makes traps always add special entities to the list of targets rather only when there's no monsters in range.
+Makes traps apply their target priority on every shot, makes the random priority random again, makes traps on highest banishment cost/special/carrying orblet sort the list of targets in the correct order, makes traps no longer have a limit on the number of times a single monster can be hit in one frame and makes traps not fire at dead monsters. Also makes traps set to target special entities add them to the list of targets regardless of whether there are any monsters in range.
 
 ## UncappedSkills
 

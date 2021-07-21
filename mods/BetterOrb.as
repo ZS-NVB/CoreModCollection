@@ -3,7 +3,7 @@ package mods {
 
 	public class BetterOrb {
 		public const MOD_NAME:String = "BetterOrb";
-		public const COREMOD_VERSION:String = "1";
+		public const COREMOD_VERSION:String = "2";
 		
 		private var main:Main;
 		private var regex:RegExp;
@@ -24,7 +24,7 @@ newarray 2\n\
 setproperty MultinameL()\n\
 ').exec(functionContents);
 				main.applyPatch(result.index + result[1].length, result[2].length, '\
-pushdouble 0.008\
+pushdouble 0.01\
 ');
 			}
 			main.modifyFunction('QName(PackageNamespace(""),"populateSkillsMetaData")', populateSkillsMetaData);

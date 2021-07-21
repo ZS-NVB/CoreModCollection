@@ -3,7 +3,7 @@ package mods {
 
 	public class TrapTargetFix {
 		public const MOD_NAME:String = "TrapTargetFix";
-		public const COREMOD_VERSION:String = "2";
+		public const COREMOD_VERSION:String = "3";
 		
 		private var main:Main;
 		private var regex:RegExp;
@@ -17,9 +17,24 @@ package mods {
 getlocal vPossibleTargets\n\
 getproperty QName(PackageNamespace(""),"length")\n\
 pushbyte 0\n\
-ifne \\w+\n\
+(ifne (\\w+)\n)\
 ').exec(functionContents);
-				main.applyPatch(result.index, result[0].length);
+				var jumpTargets : Object = main.getJumpTargets("jumpTarget1");
+				jumpTargets["jumpTarget2"] = result[2];
+				main.applyPatch(result.index + result[0].length, -result[1].length, '\
+equals\n\
+dup\n\
+iftrue jumpTarget1\n\
+pop\n\
+getlocal0\n\
+getproperty QName(PackageNamespace(""),"insertedGem")\n\
+getproperty QName(PackageNamespace(""),"targetPriority")\n\
+getlex QName(PackageNamespace("com.giab.games.gcfw.constants"),"TargetPriorityId")\n\
+getproperty QName(PackageNamespace(""), "HIGHEST_BANISHMENT_COST_SPECIAL")\n\
+equals\n\
+jumpTarget1:\n\
+iffalse jumpTarget2\
+', jumpTargets);
 				result = new RegExp('\
 jump (\\w+)\n\
 \\w+:\n\
