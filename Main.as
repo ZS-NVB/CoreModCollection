@@ -4,9 +4,6 @@ package {
 	import mods.*;
 	
 	public class Main extends MovieClip {
-		public const VERSION:String = "1.5.1";
-		public const GAME_VERSION:String = "1.2.1a";
-		public const BEZEL_VERSION:String = "0.3.1";
 		public const MOD_NAME:String = "CoreModCollection";
 		public var COREMOD_VERSION:String = "";
 		
