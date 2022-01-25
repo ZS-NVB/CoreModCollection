@@ -12,7 +12,7 @@ package {
 		public function get GAME_VERSION():String { return "1.2.1a"; }
 		public function get BEZEL_VERSION():String { return "1.1.1"; }
 		public function get MOD_NAME():String { return "CoreModCollection"; }
-
+		
 		private var _COREMOD_VERSION:String;
 		public function get COREMOD_VERSION():String {return _COREMOD_VERSION; };
 		
@@ -33,7 +33,6 @@ package {
 		public function Main() {
 			super();
 			settings = Bezel.Bezel.instance.getSettingManager(MOD_NAME);
-
 			modArray = new Array();
 			modArray.push(new RangeAdjustmentFix());
 			modArray.push(new BetterResonance());
@@ -81,14 +80,10 @@ package {
 			modArray.push(new WhiteoutOrbKillsReversion());
 			modArray.push(new LevelCapRemover());
 			modArray.sortOn("MOD_NAME");
-			
-			var modNotFound:Boolean = false;
 			var coreModVersions:Array = new Array();
-			var output:Array = new Array();
 			for each (var mod:Object in modArray) {
 				settings.registerBoolean(mod.MOD_NAME, null, true, "Restart required on change");
 				coreModVersions.push(settings.retrieveBoolean(mod.MOD_NAME) ? mod.COREMOD_VERSION : "0");
-				output.push("\"" + mod.MOD_NAME + "\":" + settings.retrieveBoolean(mod.MOD_NAME).toString());
 			}
 			_COREMOD_VERSION = coreModVersions.join();
 			//_COREMOD_VERSION = Math.random().toString();
