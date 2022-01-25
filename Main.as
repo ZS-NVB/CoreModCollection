@@ -2,16 +2,22 @@ package {
 	import flash.display.MovieClip;
 	import flash.filesystem.*;
 	import mods.*;
+	import Bezel.BezelCoreMod;
+	import Bezel.Lattice.Lattice;
+	import Bezel.Utils.SettingManager;
+	import Bezel.Bezel;
 	
-	public class Main extends MovieClip {
-		public const VERSION:String = "1.5.1";
-		public const GAME_VERSION:String = "1.2.1a";
-		public const BEZEL_VERSION:String = "0.3.1";
-		public const MOD_NAME:String = "CoreModCollection";
-		public var COREMOD_VERSION:String = "";
+	public class Main extends MovieClip implements BezelCoreMod {
+		public function get VERSION():String { return "1.6.0"; }
+		public function get GAME_VERSION():String { return "1.2.1a"; }
+		public function get BEZEL_VERSION():String { return "1.1.1"; }
+		public function get MOD_NAME():String { return "CoreModCollection"; }
+
+		private var _COREMOD_VERSION:String;
+		public function get COREMOD_VERSION():String {return _COREMOD_VERSION; };
 		
 		private var modArray:Array;
-		private var config:Object;
+		private var settings:SettingManager;
 		private var currentMod:String;
 		private var files:Object;
 		private var functions:Object;
@@ -26,6 +32,8 @@ package {
 		
 		public function Main() {
 			super();
+			settings = Bezel.Bezel.instance.getSettingManager(MOD_NAME);
+
 			modArray = new Array();
 			modArray.push(new RangeAdjustmentFix());
 			modArray.push(new BetterResonance());
@@ -73,38 +81,17 @@ package {
 			modArray.push(new WhiteoutOrbKillsReversion());
 			modArray.push(new LevelCapRemover());
 			modArray.sortOn("MOD_NAME");
-			var folder:File = File.applicationStorageDirectory.resolvePath(MOD_NAME);
-			if (!folder.isDirectory) {
-				folder.createDirectory();
-			}
-			var file:File = folder.resolvePath("Config.txt");
-			var stream:FileStream = new FileStream();
-			try {
-				stream.open(file, FileMode.READ);
-				config = JSON.parse(stream.readUTFBytes(stream.bytesAvailable));
-			} catch (error:Error) {
-				config = new Object();
-			}
-			stream.close();
+			
 			var modNotFound:Boolean = false;
 			var coreModVersions:Array = new Array();
 			var output:Array = new Array();
-			for (var i:* in modArray) {
-				var mod:Object = modArray[i];
-				if (!(mod.MOD_NAME in config)) {
-					config[mod.MOD_NAME] = true;
-					modNotFound = true;
-				}
-				coreModVersions.push(config[mod.MOD_NAME] ? mod.COREMOD_VERSION : "0");
-				output.push("\"" + mod.MOD_NAME + "\":" + config[mod.MOD_NAME].toString());
+			for each (var mod:Object in modArray) {
+				settings.registerBoolean(mod.MOD_NAME, null, true, "Restart required on change");
+				coreModVersions.push(settings.retrieveBoolean(mod.MOD_NAME) ? mod.COREMOD_VERSION : "0");
+				output.push("\"" + mod.MOD_NAME + "\":" + settings.retrieveBoolean(mod.MOD_NAME).toString());
 			}
-			COREMOD_VERSION = coreModVersions.join();
-			if (modNotFound) {
-				stream.open(file, FileMode.WRITE);
-				stream.writeUTFBytes("{\n" + output.join(",\n") + "\n}");
-				stream.close();
-			}
-			//COREMOD_VERSION = Math.random().toString();
+			_COREMOD_VERSION = coreModVersions.join();
+			//_COREMOD_VERSION = Math.random().toString();
 		}
 		
 		public function modifyFile(filename:String, f:Function, ...args:*) : void {
@@ -211,13 +198,13 @@ package {
 			patches[currentMod].push([filename, lineOffset, replaceLines, add]);
 		}
 		
-		public function loadCoreMod(lattice:Object) : void {
+		public function loadCoreMod(lattice:Lattice) : void {
 			var failedMods:Object = {};
 			patches = new Object();
 			files = new Object();
 			for (var i:* in modArray) {
 				var mod:Object = modArray[i];
-				if (config[mod.MOD_NAME]) {
+				if (settings.retrieveBoolean(mod.MOD_NAME)) {
 					currentMod = mod.MOD_NAME;
 					try {
 						mod.loadCoreMod(this);
@@ -305,9 +292,7 @@ package {
 			stream.close();
 		}
 		
-		public function bind(modLoader:Object, gameObjects:Object) : Main {
-			return this;
-		}
+		public function bind(modLoader:Bezel, gameObjects:Object) : void {}
 		
 		public function unload() : void {}
 	}
