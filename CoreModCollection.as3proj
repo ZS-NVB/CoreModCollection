@@ -4,7 +4,7 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="E:\SteamLibrary\steamapps\common\GemCraft Frostborn Wrath\Mods\CoreModCollection-1.6.0-for-1.2.1a.swf" />
+    <movie path="obj\CoreModCollection-1.6.0-GCFW.swf" />
     <movie fps="30" />
     <movie width="1920" />
     <movie height="1080" />
@@ -56,7 +56,7 @@
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
-    <element path="E:\SteamLibrary\steamapps\common\GemCraft Frostborn Wrath\Mods\BezelModLoader.swc" />
+    <element path="%BezelLibs%\BezelModLoader.swc" />
   </externalLibraryPaths>
   <!-- Runtime Shared Libraries -->
   <rslPaths>
