@@ -3,7 +3,7 @@ package mods {
 	
 	public class RangeAdjustmentFix {
 		public const MOD_NAME:String = "RangeAdjustmentFix";
-		public const COREMOD_VERSION:String = "1";
+		public const COREMOD_VERSION:String = "2";
 		
 		private var main:Main;
 		private var regex:RegExp;
@@ -96,6 +96,11 @@ callpropvoid QName(PackageNamespace(""), "recalculateSds"), 1\
 				result = new RegExp(main.format('\
 debugline \\d+\n\
 getlocal ?{vGem}\n\
+getproperty QName\\(PackageNamespace\\(""\\), "rangeRatio"\\)\n\
+pushbyte 1\n\
+callpropvoid QName\\(PackageNamespace\\(""\\), "s"\\), 1\n\
+debugline \\d+\n\
+getlocal ?{vGem}\n\
 getproperty QName\\(PackageNamespace\\(""\\), "sd4_IntensityMod"\\)\n\
 getproperty QName\\(PackageNamespace\\(""\\), "range"\\)\n\
 getlocal ?{vRange4}\n\
@@ -121,6 +126,11 @@ callpropvoid QName\\(PackageNamespace\\(""\\), "s"\\), 1\n\
 ')).exec(functionContents);
 				main.applyPatch(result.index, result[0].length);
 				result = new RegExp(main.format('\
+debugline \\d+\n\
+getlocal ?{vGem}\n\
+getproperty QName\\(PackageNamespace\\(""\\), "rangeRatio"\\)\n\
+getlocal ?{vRangeRatio}\n\
+callpropvoid QName\\(PackageNamespace\\(""\\), "s"\\), 1\n\
 debugline \\d+\n\
 getlocal ?{vGem}\n\
 getproperty QName\\(PackageNamespace\\(""\\), "sd4_IntensityMod"\\)\n\
