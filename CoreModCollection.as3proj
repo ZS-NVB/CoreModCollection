@@ -4,7 +4,7 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="E:\SteamLibrary\steamapps\common\GemCraft Frostborn Wrath\Mods\CoreModCollection-1.5.2-for-1.2.1a.swf" />
+    <movie path="E:\SteamLibrary\steamapps\common\GemCraft Frostborn Wrath\Mods\CoreModCollection-1.5.2a-for-1.2.1a.swf" />
     <movie fps="30" />
     <movie width="1920" />
     <movie height="1080" />
@@ -12,7 +12,6 @@
     <movie minorVersion="0" />
     <movie platform="AIR" />
     <movie background="#FFFFFF" />
-    <movie preferredSDK="C:\Program Files (x86)\FlashDevelop\flex_sdk_4.6.0.23201B" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
