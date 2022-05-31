@@ -10,7 +10,7 @@ package {
 	public class Main extends MovieClip implements BezelCoreMod {
 		public function get VERSION():String { return "1.6.0"; }
 		public function get GAME_VERSION():String { return "1.2.1a"; }
-		public function get BEZEL_VERSION():String { return "1.1.1"; }
+		public function get BEZEL_VERSION():String { return "2.0.0"; }
 		public function get MOD_NAME():String { return "CoreModCollection"; }
 		
 		private var _COREMOD_VERSION:String;
